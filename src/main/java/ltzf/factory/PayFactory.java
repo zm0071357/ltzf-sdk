@@ -1,5 +1,6 @@
 package ltzf.factory;
 
+import ltzf.payments.h5.H5PayService;
 import ltzf.payments.nativepay.NativePayService;
 
 /**
@@ -8,5 +9,7 @@ import ltzf.payments.nativepay.NativePayService;
 public interface PayFactory {
 
     NativePayService nativePayService();
+
+    H5PayService h5PayService();
 
 }

@@ -5,8 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ltzf.factory.Configuration;
 import ltzf.factory.defaults.DefaultPayFactory;
 import ltzf.payments.nativepay.NativePayService;
-import ltzf.payments.nativepay.model.PrepayRequest;
-import ltzf.payments.nativepay.model.PrepayResponse;
+import ltzf.payments.nativepay.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +30,7 @@ public class NativePayServiceTest {
         // 请求参数
         PrepayRequest request = new PrepayRequest();
         request.setMchId("1698731613");
-        request.setOutTradeNo("LTZF2022113025096");
+        request.setOutTradeNo("LTZF2022113055096");
         request.setTotalFee("0.01");
         request.setBody("QQ公仔");
         request.setNotifyUrl("http://xiaoming-programming.top");
@@ -41,4 +40,44 @@ public class NativePayServiceTest {
         log.info("请求参数:{}", JSON.toJSONString(request));
         log.info("返回结果:{}", JSON.toJSONString(reponse));
     }
+
+    @Test
+    public void test_queryOrderByOutTradeNo() throws Exception {
+        QueryOrderByOutTradeNoRequest request = new QueryOrderByOutTradeNoRequest();
+        request.setMchid("1698731613");
+        request.setOutTradeNo("LTZF2022113055096");
+        QueryOrderByOutTradeNoResponse response = nativePayService.queryOrderByOutTradeNo(request);
+        log.info("请求参数: {}", JSON.toJSONString(request));
+        log.info("返回结果: {}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void test_refundOrder() throws Exception {
+        RefundOrderRequest request = new RefundOrderRequest();
+        request.setMchid("1698731613");
+        request.setOutTradeNo("LTZF2022113055096");
+        request.setOutRefundNo("LTZFTD2022113055088");
+        request.setRefundFee("0.01");
+        request.setRefundDesc("测试退款");
+        request.setNotifyUrl("http://xiaoming-programming.top ");
+
+        Object response = nativePayService.refundOrder(request);
+        log.info("请求参数: {}", JSON.toJSONString(request));
+        log.info("返回结果: {}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void test_getRefundOrder() throws Exception {
+        GetRefundOrderRequest request = new GetRefundOrderRequest();
+        request.setMchid("1698731613");
+        request.setOutRefundNo("LTZFTD2022113055088");
+
+        GetRefundOrderResponse response = nativePayService.getRefundOrder(request);
+        log.info("请求参数: {}", JSON.toJSONString(request));
+        log.info("返回结果: {}", JSON.toJSONString(response));
+    }
+
+
+
+
 }

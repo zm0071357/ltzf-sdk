@@ -2,6 +2,8 @@ package ltzf.factory.defaults;
 
 import ltzf.factory.Configuration;
 import ltzf.factory.PayFactory;
+import ltzf.payments.h5.H5PayService;
+import ltzf.payments.h5.IH5PayApi;
 import ltzf.payments.nativepay.INativePayApi;
 import ltzf.payments.nativepay.NativePayService;
 import okhttp3.OkHttpClient;
@@ -45,5 +47,20 @@ public class DefaultPayFactory implements PayFactory {
 
         // 创建Native支付服务
         return new NativePayService(configuration, nativePayApi);
+    }
+
+    @Override
+    public H5PayService h5PayService() {
+        // 构建API
+        IH5PayApi h5PayApi = new Retrofit.Builder()
+                .baseUrl(configuration.getApiHost())
+                .client(httpClient)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
+                .build()
+                .create(IH5PayApi.class);
+
+        // 创建Native支付服务
+        return new H5PayService(configuration, h5PayApi);
     }
 }
