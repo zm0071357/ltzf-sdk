@@ -70,6 +70,5 @@ public class ApiTest {
         PrepayResponse prepayResponse = response.body();
 
         log.info("测试结果:{}", JSON.toJSONString(prepayResponse));
-
     }
 }
